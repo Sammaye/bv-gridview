@@ -1,6 +1,6 @@
 <template>
-    <bv-grdview
-            :slots="slots"
+    <bv-grdview-component
+        :slots="slots"
         :id="id"
         :primary-key="primaryKey"
         :api-url="apiUrl"
@@ -14,13 +14,11 @@
         <template #abstract="props">
             {{ props.row.item.abstract }}
         </template>
-    </bv-grdview>
+    </bv-grdview-component>
 </template>
 
 <script>
-    import BvGridview from "./components/BvGridview";
     export default {
-        components: {BvGridview},
         data() {
             return {
                 slots: [

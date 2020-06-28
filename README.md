@@ -26,4 +26,6 @@ and use it in a component:
 </template>
 ```
 
-If you need a more concrete exmaple the `example.vue` file provides a full one.
+If you need a more concrete example the `example.vue` file provides a full one.
+
+the file example also includes using grand children slots through this component. 

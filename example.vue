@@ -1,5 +1,6 @@
 <template>
     <bv-grdview
+            :slots="slots"
         :id="id"
         :primary-key="primaryKey"
         :api-url="apiUrl"
@@ -9,7 +10,11 @@
         :page="page"
         :per-page="perPage"
         :fields="fields"
-    ></bv-grdview>
+    >
+        <template #abstract="props">
+            {{ props.row.item.abstract }}
+        </template>
+    </bv-grdview>
 </template>
 
 <script>
@@ -18,6 +23,12 @@
         components: {BvGridview},
         data() {
             return {
+                slots: [
+                    {
+                        name: 'abstract',
+                        field: 'abstract'
+                    }
+                ],
                 id: 'admin-foo-table',
                 primaryKey: '_id',
 

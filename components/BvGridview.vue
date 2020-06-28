@@ -5,11 +5,11 @@
                 <b-form-group class="mb-0">
                     <b-input-group size="sm">
                         <b-form-input
-                            v-model="filter"
-                            type="search"
-                            id="filterInput"
-                            placeholder="Type to Search"
-                            debounce="1000"
+                                v-model="filter"
+                                type="search"
+                                id="filterInput"
+                                placeholder="Type to Search"
+                                debounce="1000"
                         ></b-form-input>
                         <b-input-group-append>
                             <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
@@ -21,9 +21,9 @@
                 <b-form-group class="mb-1">
                     <b-form-checkbox-group v-model="filterOn" class="mt-1">
                         <b-form-checkbox
-                            v-for="field in filterable"
-                            :key="field.key"
-                            :value="field.key"
+                                v-for="field in filterable"
+                                :key="field.key"
+                                :value="field.key"
                         >
                             {{field.label}}
                         </b-form-checkbox>
@@ -33,20 +33,20 @@
         </b-row>
 
         <b-table
-            :id="id"
-            :api-url="apiUrl"
-            :items="items"
-            :fields="fields"
-            :primary-key="primaryKey"
-            striped bordered responsive="sm"
-            show-empty
-            :busy="isBusy"
-            :sort-by.snc="sortBy"
-            :sort-desc.sync="sortDesc"
-            :currentPage="currentPage"
-            :perPage="perPage"
-            :filter="filter"
-            :filterIncludedFields="filterOn"
+                :id="id"
+                :api-url="apiUrl"
+                :items="items"
+                :fields="fields"
+                :primary-key="primaryKey"
+                striped bordered responsive="sm"
+                show-empty
+                :busy="isBusy"
+                :sort-by.snc="sortBy"
+                :sort-desc.sync="sortDesc"
+                :currentPage="currentPage"
+                :perPage="perPage"
+                :filter="filter"
+                :filterIncludedFields="filterOn"
         >
             <template v-slot:table-busy>
                 <div class="text-center my-2">
@@ -57,6 +57,9 @@
             <template v-slot:[`cell(${primaryKey})`]="row">
                 <b>{{row.value}}</b>
             </template>
+            <template v-for="slot in slots" v-slot:[`cell(${slot.field})`]="row">
+                <slot :name="slot.name" :row="row"></slot>
+            </template>
             <template v-slot:cell(actions)="row">
                 <b-link href="#" @click.prevent="editItem(row.item, row.index)">Edit</b-link>
                 <b-link href="#" @click.prevent="deleteItem(row.item, row.index)">Delete</b-link>
@@ -64,10 +67,10 @@
         </b-table>
 
         <b-pagination
-            v-model="currentPage"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            :aria-controls="id"
+                v-model="currentPage"
+                :total-rows="totalRows"
+                :per-page="perPage"
+                :aria-controls="id"
         ></b-pagination>
     </div>
 </template>
@@ -75,6 +78,13 @@
 <script>
     export default {
         props: {
+            slots: {
+                type: Array,
+                required: false,
+                default: _ => {
+                    return [];
+                },
+            },
             id: {
                 type: String,
                 required: true
